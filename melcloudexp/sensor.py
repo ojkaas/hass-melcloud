@@ -4,7 +4,6 @@ from __future__ import annotations
 from collections.abc import Callable
 import dataclasses
 from typing import Any
-import logging
 
 from pymelcloud import DEVICE_TYPE_ATA, DEVICE_TYPE_ATW, DEVICE_TYPE_ERV
 from pymelcloud.atw_device import Zone
@@ -22,8 +21,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import MelCloudDevice
 from .const import DOMAIN
-
-_LOGGER = logging.getLogger(__name__)
 
 @dataclasses.dataclass
 class MelcloudRequiredKeysMixin:
@@ -103,27 +100,11 @@ ERV_SENSORS: tuple[MelcloudSensorEntityDescription, ...] = (
         enabled=lambda x: True,
     ),
     MelcloudSensorEntityDescription(
-        key="ventilation_mode",
-        translation_key="ventilation_mode",
-        icon="mdi:air-filter",
-        device_class=SensorDeviceClass.ENUM,
-        value_fn=lambda x: x.device.ventilation_mode,
-        enabled=lambda x: True,
-    ),
-    MelcloudSensorEntityDescription(
         key="actual_ventilation_mode",
         translation_key="actual_ventilation_mode",
         icon="mdi:air-filter",
         device_class=SensorDeviceClass.ENUM,
         value_fn=lambda x: x.device.actual_ventilation_mode,
-        enabled=lambda x: True,
-    ),
-    MelcloudSensorEntityDescription(
-        key="fan_speed",
-        translation_key="fan_speed",
-        icon="mdi:fan",
-        device_class=SensorDeviceClass.ENUM,
-        value_fn=lambda x: x.device.fan_speed,
         enabled=lambda x: True,
     ),
     MelcloudSensorEntityDescription(
@@ -246,8 +227,6 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up MELCloud device sensors based on config_entry."""
-    print('SENSORS')
-    _LOGGER.error('Setting up MELCloud device sensors')
     mel_devices = hass.data[DOMAIN].get(entry.entry_id)
 
     entities: list[MelDeviceSensor] = [
