@@ -25,7 +25,7 @@ from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=60)
+MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
 
 PLATFORMS = [Platform.CLIMATE, Platform.SENSOR, Platform.WATER_HEATER, Platform.SELECT, Platform.SWITCH]
 
