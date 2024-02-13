@@ -174,8 +174,9 @@ async def mel_devices_setup(
         all_devices = await get_devices(
             token,
             session,
-            conf_update_interval=timedelta(minutes=5),
-            device_set_debounce=timedelta(seconds=1),
+            user_update_interval=timedelta(minutes=30),
+            conf_update_interval=timedelta(minutes=15),
+            device_set_debounce=timedelta(seconds=2),
         )
     wrapped_devices: dict[str, list[MelCloudDevice]] = {}
     for device_type, devices in all_devices.items():
